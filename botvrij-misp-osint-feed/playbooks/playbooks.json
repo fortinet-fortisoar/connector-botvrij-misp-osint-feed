@@ -1,0 +1,866 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - Botvrij.eu MISP OSINT Feed - 1.0.0",
+      "description": null,
+      "visible": true,
+      "image": null,
+      "uuid": "2b8325c2-860f-4d4f-9e24-c764b49a471e",
+      "id": 27,
+      "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+      "createDate": 1641393654.544477,
+      "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+      "modifyDate": 1641472045.012621,
+      "recordTags": [],
+      "deletedAt": null,
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": ">> Botvrij.eu > Create",
+          "aliasName": null,
+          "tag": null,
+          "description": null,
+          "isActive": true,
+          "debug": true,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "attributes",
+            "eventId"
+          ],
+          "synchronous": false,
+          "lastModifyDate": 1641801696,
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "20",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "f54f199c-ffc0-432a-a592-e2a5c875766b",
+              "id": 1069
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Record",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.input.params.attributes}}",
+                  "__bulk": true,
+                  "parallel": false,
+                  "condition": "{{vars.item.to_ids}}",
+                  "batch_size": 100
+                },
+                "resource": {
+                  "tLP": "{{ vars.tlp_resolved }}",
+                  "value": "{{ vars.item.value }}",
+                  "source": "Botvrij.eu MISP OSINT",
+                  "created": "{{ vars.item.timestamp | int }}",
+                  "pattern": "{{ vars.item.value }}",
+                  "modified": "{{ vars.item.timestamp | int }}",
+                  "sourceId": "{{ vars.item.uuid }}",
+                  "__replace": "",
+                  "expiresOn": "{% if vars.expiry %}{{ (vars.item.timestamp | int) + (vars.expiry | int)*24*60*60 }}{% else %}None{% endif %}",
+                  "validFrom": "{{ vars.item.timestamp | int }}",
+                  "confidence": "{{ vars.confidence }}",
+                  "reputation": "{{ vars.reputation_resolved }}",
+                  "sourceData": "{{ vars.item }}",
+                  "typeOfFeed": "{{ vars.item.type | resolveRange(vars.threat_intel_feed_typeOfFeed_map) }}",
+                  "relatedThreatIntelFeeds": [
+                    "{{vars.eventId}}"
+                  ]
+                },
+                "_showJson": true,
+                "collection": "/api/ingest-feeds/threat_intel_feeds",
+                "__recommend": [],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "340",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/7b221880-716b-4726-a2ca-5e568d330b3e",
+              "uuid": "f7cfd900-b8b6-4021-8017-7081263dfd33",
+              "id": 1071
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "Amber",
+                "expiry": "180",
+                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
+                "confidence": "70",
+                "reputation": "Malicious",
+                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
+                "threat_intel_feed_typeOfFeed_map": "{'md5': '{{\"ThreatIntelFeedType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"ThreatIntelFeedType\" | picklist(\"URL\", \"uuid\")}}',\n'network-traffic': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}'}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "a62de261-e6cb-45a1-8dc3-a366262a64d4",
+              "id": 1072
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
+              },
+              "status": null,
+              "top": "220",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1a7e68bf-7a04-4356-9fa5-5d06680158e4",
+              "id": 1073
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Resolve Range",
+              "targetStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
+              "sourceStep": "/api/3/workflow_steps/a62de261-e6cb-45a1-8dc3-a366262a64d4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "09d2c16b-3185-4732-abb8-912ce49a516c"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Create Record",
+              "targetStep": "/api/3/workflow_steps/f7cfd900-b8b6-4021-8017-7081263dfd33",
+              "sourceStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "1c3c269c-b0bd-480e-a1b3-8f02934c5245"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/a62de261-e6cb-45a1-8dc3-a366262a64d4",
+              "sourceStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "664712f3-55f0-47b4-bba2-ac7a3ee690d1"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "6ea0c25e-5744-49e3-a37e-87af0a0b64c9",
+          "recordTags": [
+            "dataingestion",
+            "create",
+            "botvrij-misp-osint-feed"
+          ],
+          "id": 188,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1641795883.848899,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1641801696.598717,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Botvrij.eu OSINT Feed > Ingest",
+          "aliasName": null,
+          "tag": null,
+          "description": null,
+          "isActive": true,
+          "debug": true,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1641802067,
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
+              "id": 465
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Collections",
+              "description": null,
+              "arguments": {
+                "name": "Botvrij.eu MISP OSINT Feed",
+                "config": "a50271cb-6910-4276-a6c2-578e9fc76e37",
+                "params": {
+                  "modified_after": "{{vars.lastPullTime}}"
+                },
+                "version": "1.0.0",
+                "connector": "botvrij-misp-osint-feed",
+                "operation": "get_collections",
+                "operationTitle": "Get Collections",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "360",
+              "left": "780",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "2f147ba2-bd2b-430a-908e-aba0235a55b8",
+              "id": 466
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Macro Value",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.pullTimeMacro}}",
+                  "body": "",
+                  "method": "GET"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "200",
+              "left": "460",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "12485a8f-93fa-456c-ba7f-a41e4e8e3555",
+              "id": 467
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "fetchTime": "{{arrow.utcnow().int_timestamp}}",
+                "pullTimeMacro": "BotvrijMISPFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "280",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "515b908c-8e47-4af2-a5ba-a46da1cc47cf",
+              "id": 468
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Pull Time",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "macro": "{{vars.pullTimeMacro}}",
+                  "value": "{{vars.fetchTime}}"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "updatemacro",
+                "operationTitle": "CyOPs: Update Macro",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "520",
+              "left": "1100",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "d8a64d5f-84c5-468d-9183-ab1b692da022",
+              "id": 469
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Value from Response",
+              "description": null,
+              "arguments": {
+                "lastPullTime": "{% if (vars.steps.Get_Macro_Value.data[\"hydra:member\"] | length) > 0%}{{vars.steps.Get_Macro_Value.data[\"hydra:member\"][0].value }}{% else %}0{% endif %}"
+              },
+              "status": null,
+              "top": "280",
+              "left": "620",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
+              "id": 470
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch each collection",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.steps.Get_Collections.data}}",
+                  "parallel": false,
+                  "condition": ""
+                },
+                "arguments": {
+                  "collection": "{{ vars.item }}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/e5aebed2-7cf0-4de3-9e8d-888ea62ece99"
+              },
+              "status": null,
+              "top": "440",
+              "left": "940",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "baf2590f-fe03-4a81-be81-20113450e58a",
+              "id": 473
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Get Macro Value",
+              "targetStep": "/api/3/workflow_steps/12485a8f-93fa-456c-ba7f-a41e4e8e3555",
+              "sourceStep": "/api/3/workflow_steps/515b908c-8e47-4af2-a5ba-a46da1cc47cf",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ab26ecea-9ceb-4617-a980-96a85bbee291"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/515b908c-8e47-4af2-a5ba-a46da1cc47cf",
+              "sourceStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "20ce9bc4-f32b-45ab-8426-1f75fd1b6120"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Macro Value -> Extract Value from Response",
+              "targetStep": "/api/3/workflow_steps/10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
+              "sourceStep": "/api/3/workflow_steps/12485a8f-93fa-456c-ba7f-a41e4e8e3555",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "04271de4-7bdb-413a-b470-b68436571f25"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Value from Response -> Get Collections",
+              "targetStep": "/api/3/workflow_steps/2f147ba2-bd2b-430a-908e-aba0235a55b8",
+              "sourceStep": "/api/3/workflow_steps/10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "277484e0-a4bf-4585-8b69-f8a09def36ea"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Collections -> Fetch each collection",
+              "targetStep": "/api/3/workflow_steps/baf2590f-fe03-4a81-be81-20113450e58a",
+              "sourceStep": "/api/3/workflow_steps/2f147ba2-bd2b-430a-908e-aba0235a55b8",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ad41406d-ed98-4ded-8a06-758593ff0ea1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Fetch each collection -> Update Pull Time",
+              "targetStep": "/api/3/workflow_steps/d8a64d5f-84c5-468d-9183-ab1b692da022",
+              "sourceStep": "/api/3/workflow_steps/baf2590f-fe03-4a81-be81-20113450e58a",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "2b4a85e5-0ac2-4f19-9bf5-dc7270f4c753"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "dd81c69b-95c3-4433-a4d1-d046a08808df",
+          "recordTags": [
+            "dataingestion",
+            "botvrij-misp-osint-feed",
+            "ingest"
+          ],
+          "id": 114,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1641393684.76763,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1641802066.854895,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> Botvrij.eu > Fetch",
+          "aliasName": null,
+          "tag": null,
+          "description": null,
+          "isActive": true,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "collection"
+          ],
+          "synchronous": false,
+          "lastModifyDate": 1641801207,
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
+              "id": 471
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get events for a collection",
+              "description": null,
+              "arguments": {
+                "name": "Botvrij.eu MISP OSINT Feed",
+                "config": "a50271cb-6910-4276-a6c2-578e9fc76e37",
+                "params": {
+                  "output_mode": "Return as a JSON",
+                  "collectionID": "{{vars.input.params.collection}}",
+                  "modified_after": ""
+                },
+                "version": "1.0.0",
+                "connector": "botvrij-misp-osint-feed",
+                "operation": "get_objects_by_collection_id",
+                "operationTitle": "Get Objects By Collection ID",
+                "pickFromTenant": false,
+                "step_variables": {
+                  "eventAttributes": "{{vars.result.data.Event.Attribute}}"
+                }
+              },
+              "status": null,
+              "top": "440",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a5083567-b8bb-4473-a1f5-48e5e43284e4",
+              "id": 472
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "Amber",
+                "expiry": "180",
+                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
+                "confidence": "70",
+                "reputation": "Malicious",
+                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
+                "threat_intel_feed_typeoffeed_map": "{'md5': '{{\"IndicatorType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"IndicatorType\" | picklist(\"URL\", \"uuid\")}}',\n'network-traffic': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}'}"
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
+              "id": 475
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
+              },
+              "status": null,
+              "top": "300",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "db92b642-5ca8-45a8-97af-d701717f8a11",
+              "id": 476
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create and Link to Event",
+              "description": null,
+              "arguments": {
+                "resource": {
+                  "tLP": "{{ vars.tlp_resolved }}",
+                  "value": "{{vars.steps.Get_events_for_a_collection.data.Event.info}}",
+                  "source": "Botvrij.ru MISP OSINT",
+                  "created": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
+                  "pattern": "{{vars.steps.Get_events_for_a_collection.data.Event.info}}",
+                  "modified": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
+                  "sourceId": "{{vars.steps.Get_events_for_a_collection.data.Event.uuid}}",
+                  "__replace": "true",
+                  "validFrom": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
+                  "confidence": "{{ vars.confidence }}",
+                  "reputation": "{{ vars.reputation_resolved }}",
+                  "typeOfFeed": "/api/3/picklists/ec8b8c0a-825e-4c6d-8ad2-628100d6da76",
+                  "relatedMalware": "{% if vars.softwareIDs %}{{vars.softwareIDs}}{%endif%}",
+                  "relatedThreatActors": "{% if vars.groupIDs %}{{vars.groupIDs}}{%endif%}",
+                  "relatedATTCKTechniques": "{% if vars.techniqueIDs %}{{vars.techniqueIDs}}{%endif%}",
+                  "relatedATTCKSubTechniques": "{% if vars.subTechniqueIDs %}{{vars.subTechniqueIDs}}{%endif%}"
+                },
+                "_showJson": false,
+                "operation": "Overwrite",
+                "collection": "/api/3/upsert/threat_intel_feeds",
+                "__recommend": [],
+                "fieldOperation": {
+                  "recordTags": "Overwrite"
+                },
+                "step_variables": []
+              },
+              "status": null,
+              "top": "560",
+              "left": "480",
+              "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
+              "uuid": "73cf2d81-f235-41b9-a500-086ad28fb43a",
+              "id": 477
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Relations",
+              "description": null,
+              "arguments": {
+                "mitre_objects": "{% set groups,software,techniques,subTechniques = [],[],[],[] %}{% for tag in vars.steps.Get_events_for_a_collection.data.Event.Tag %}{% if 'mitre-attack-pattern' in tag.name %}{% set t_name='T' + tag.name.split(\"- T\")[1].rstrip('\\\\\"') %}{% if '.' in t_name %}{% set _temp=subTechniques.append(t_name) %}{% else %}{% set _temp=techniques.append(t_name) %}{% endif %}{% elif 'mitre-intrusion-set' in tag.name %}{% set g_name='G' + tag.name.split(\"- G\")[1].rstrip('\\\\\"') %}{% set _temp=groups.append(g_name) %}{% elif 'mitre-malware' in tag.name %}{% set s_name='S' + tag.name.split(\"- S\")[1].rstrip('\\\\\"') %}{% set _temp=software.append(s_name) %}{% endif %}{% endfor %}{\"techniques\": {{techniques}}, \"groups\": {{groups}}, \"software\": {{software}} }"
+              },
+              "status": null,
+              "top": "570",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "3aff0ab5-7f56-4568-8adb-8458df1504c0",
+              "id": 1060
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find Group IDs",
+              "description": null,
+              "arguments": {
+                "when": "{{vars.mitre_objects.groups}}",
+                "query": {
+                  "sort": [],
+                  "limit": 30,
+                  "logic": "AND",
+                  "filters": [
+                    {
+                      "type": "primitive",
+                      "field": "mitreId",
+                      "value": "{{vars.mitre_objects.groups}}",
+                      "operator": "in",
+                      "_operator": "in"
+                    }
+                  ],
+                  "__selectFields": [
+                    "mitreId"
+                  ]
+                },
+                "module": "mitre_groups?$limit=30",
+                "checkboxFields": true,
+                "step_variables": {
+                  "groupIDs": "{{vars.result | json_query('[*][\"@id\"][]')}}"
+                }
+              },
+              "status": null,
+              "top": "40",
+              "left": "480",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
+              "uuid": "9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
+              "id": 1061
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find Software IDs",
+              "description": null,
+              "arguments": {
+                "when": "{{vars.mitre_objects.software}}",
+                "query": {
+                  "sort": [],
+                  "limit": 30,
+                  "logic": "AND",
+                  "filters": [
+                    {
+                      "type": "primitive",
+                      "field": "mitreId",
+                      "value": "{{vars.mitre_objects.software}}",
+                      "operator": "in",
+                      "_operator": "in"
+                    }
+                  ]
+                },
+                "module": "mitre_software?$limit=30",
+                "checkboxFields": true,
+                "step_variables": {
+                  "softwareIDs": "{{vars.result | json_query('[*][\"@id\"][]')}}"
+                }
+              },
+              "status": null,
+              "top": "300",
+              "left": "480",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
+              "uuid": "b6de275f-c634-4bb3-a561-771591f5fa58",
+              "id": 1062
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find Technique IDs",
+              "description": null,
+              "arguments": {
+                "when": "{{vars.mitre_objects.groups}}",
+                "query": {
+                  "sort": [],
+                  "limit": 30,
+                  "logic": "AND",
+                  "filters": [
+                    {
+                      "type": "primitive",
+                      "field": "mitreId",
+                      "value": "{{vars.mitre_objects.techniques}}",
+                      "operator": "in",
+                      "_operator": "in"
+                    }
+                  ]
+                },
+                "module": "mitre_techniques?$limit=30",
+                "checkboxFields": true,
+                "step_variables": {
+                  "techniqueIDs": "{{vars.result | json_query('[*][\"@id\"][]')}}"
+                }
+              },
+              "status": null,
+              "top": "160",
+              "left": "480",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
+              "uuid": "a0a92eb6-e719-4626-b44d-420adc15e5c2",
+              "id": 1063
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Find SubTechnique IDs",
+              "description": null,
+              "arguments": {
+                "when": "{{vars.mitre_objects.subTechniques}}",
+                "query": {
+                  "sort": [],
+                  "limit": 30,
+                  "logic": "AND",
+                  "filters": [
+                    {
+                      "type": "primitive",
+                      "field": "mitreId",
+                      "value": "{{vars.mitre_objects.subTechniques}}",
+                      "operator": "in",
+                      "_operator": "in"
+                    }
+                  ]
+                },
+                "module": "mitre_sub_techniques?$limit=30",
+                "checkboxFields": true,
+                "step_variables": {
+                  "subTechniqueIDs": "{{vars.result | json_query('[*][\"@id\"][]')}}"
+                }
+              },
+              "status": null,
+              "top": "440",
+              "left": "480",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
+              "uuid": "ecd2b43b-6b6f-4149-831b-28d074597123",
+              "id": 1064
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Attribute Records",
+              "description": null,
+              "arguments": {
+                "arguments": {
+                  "eventId": "{{vars.eventID}}",
+                  "attributes": "{{vars.eventAttributes | union(vars.subAttributes)}}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/6ea0c25e-5744-49e3-a37e-87af0a0b64c9"
+              },
+              "status": null,
+              "top": "160",
+              "left": "840",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "5e036389-3717-4e80-b237-609029d1e685",
+              "id": 1080
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Sub Attributes",
+              "description": null,
+              "arguments": {
+                "eventID": "{{vars.steps.Create_and_Link_to_Event.uuid}}",
+                "subAttributes": "{{vars.steps.Get_events_for_a_collection.data.Event.Object |  json_query('[][\"Attribute\"][][]')}}"
+              },
+              "status": null,
+              "top": "40",
+              "left": "840",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
+              "id": 1081
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Resolve Range",
+              "targetStep": "/api/3/workflow_steps/db92b642-5ca8-45a8-97af-d701717f8a11",
+              "sourceStep": "/api/3/workflow_steps/8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "152e8fa2-14e7-4e9b-b385-a68046f20a38"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
+              "sourceStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "172ca2da-adb1-4df1-bebc-81745fdb292a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Get events for a collection",
+              "targetStep": "/api/3/workflow_steps/a5083567-b8bb-4473-a1f5-48e5e43284e4",
+              "sourceStep": "/api/3/workflow_steps/db92b642-5ca8-45a8-97af-d701717f8a11",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "5dc9305f-4be3-438e-a900-d7a457bb3886"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Relations -> Find Group IDs",
+              "targetStep": "/api/3/workflow_steps/9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
+              "sourceStep": "/api/3/workflow_steps/3aff0ab5-7f56-4568-8adb-8458df1504c0",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "864ac287-1a56-41a6-9d50-8a6f90922a81"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Find Group IDs -> Copy 1 of Find Group IDs",
+              "targetStep": "/api/3/workflow_steps/a0a92eb6-e719-4626-b44d-420adc15e5c2",
+              "sourceStep": "/api/3/workflow_steps/9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ec66824f-5fca-4913-9acc-6e111bf0210f"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Find Technique IDs -> Copy of Find Group IDs",
+              "targetStep": "/api/3/workflow_steps/b6de275f-c634-4bb3-a561-771591f5fa58",
+              "sourceStep": "/api/3/workflow_steps/a0a92eb6-e719-4626-b44d-420adc15e5c2",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "6ca47864-d614-4692-9958-a3db1f2e9946"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Find Software IDs -> Copy 2 of Find Group IDs",
+              "targetStep": "/api/3/workflow_steps/ecd2b43b-6b6f-4149-831b-28d074597123",
+              "sourceStep": "/api/3/workflow_steps/b6de275f-c634-4bb3-a561-771591f5fa58",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ee136af7-528a-46cf-8814-3e7c0c4d8135"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Find SubTechnique IDs -> Create and Link to Event",
+              "targetStep": "/api/3/workflow_steps/73cf2d81-f235-41b9-a500-086ad28fb43a",
+              "sourceStep": "/api/3/workflow_steps/ecd2b43b-6b6f-4149-831b-28d074597123",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "e9912a0d-3d76-438f-97c9-0d29c49a08c4"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get events for a collection -> Extract Relations",
+              "targetStep": "/api/3/workflow_steps/3aff0ab5-7f56-4568-8adb-8458df1504c0",
+              "sourceStep": "/api/3/workflow_steps/a5083567-b8bb-4473-a1f5-48e5e43284e4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ad9054e2-f6fa-492e-a34c-939db933976e"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Create and Link to Event -> Get Sub Attributes",
+              "targetStep": "/api/3/workflow_steps/f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
+              "sourceStep": "/api/3/workflow_steps/73cf2d81-f235-41b9-a500-086ad28fb43a",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "0195cbe8-86c7-4d59-86fb-19127040eb73"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Sub Attributes -> Create Attribute Records",
+              "targetStep": "/api/3/workflow_steps/5e036389-3717-4e80-b237-609029d1e685",
+              "sourceStep": "/api/3/workflow_steps/f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f105fc05-afe8-4d52-9b1c-e17a8f6772e0"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "e5aebed2-7cf0-4de3-9e8d-888ea62ece99",
+          "recordTags": [
+            "botvrij-misp-osint-feed",
+            "datain",
+            "fetch"
+          ],
+          "id": 115,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1641472547.21123,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1641801207.091282,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null
+        }
+      ]
+    }
+  ],
+  "exported_tags": [
+    "dataingestion",
+    "create",
+    "botvrij-misp-osint-feed",
+    "ingest",
+    "datain",
+    "fetch"
+  ]
+}
