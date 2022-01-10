@@ -6,7 +6,7 @@
       "name": "Sample - Botvrij.eu MISP OSINT Feed - 1.0.0",
       "description": null,
       "visible": true,
-      "image": null,
+      "image": "botvrij-misp.png",
       "uuid": "2b8325c2-860f-4d4f-9e24-c764b49a471e",
       "id": 27,
       "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
@@ -24,7 +24,7 @@
           "tag": null,
           "description": null,
           "isActive": true,
-          "debug": true,
+          "debug": false,
           "singleRecordExecution": false,
           "remoteExecutableFlag": false,
           "parameters": [
@@ -32,7 +32,7 @@
             "eventId"
           ],
           "synchronous": false,
-          "lastModifyDate": 1641801696,
+          "lastModifyDate": 1641822631,
           "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
@@ -80,19 +80,19 @@
                   "validFrom": "{{ vars.item.timestamp | int }}",
                   "confidence": "{{ vars.confidence }}",
                   "reputation": "{{ vars.reputation_resolved }}",
-                  "sourceData": "{{ vars.item }}",
+                  "sourceData": "{{ vars.item | toJSON }}",
                   "typeOfFeed": "{{ vars.item.type | resolveRange(vars.threat_intel_feed_typeOfFeed_map) }}",
                   "relatedThreatIntelFeeds": [
                     "{{vars.eventId}}"
                   ]
                 },
-                "_showJson": true,
+                "_showJson": false,
                 "collection": "/api/ingest-feeds/threat_intel_feeds",
                 "__recommend": [],
                 "step_variables": []
               },
               "status": null,
-              "top": "340",
+              "top": "320",
               "left": "120",
               "stepType": "/api/3/workflow_step_types/7b221880-716b-4726-a2ca-5e568d330b3e",
               "uuid": "f7cfd900-b8b6-4021-8017-7081263dfd33",
@@ -103,13 +103,13 @@
               "name": "Configuration",
               "description": null,
               "arguments": {
-                "tlp": "Amber",
+                "tlp": "White",
                 "expiry": "180",
                 "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
                 "confidence": "70",
                 "reputation": "Malicious",
                 "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
-                "threat_intel_feed_typeOfFeed_map": "{'md5': '{{\"ThreatIntelFeedType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"ThreatIntelFeedType\" | picklist(\"URL\", \"uuid\")}}',\n'network-traffic': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}'}"
+                "threat_intel_feed_typeOfFeed_map": "{'md5': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-MD5\", \"uuid\")}}','sha1': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-SHA1\", \"uuid\")}}','sha256': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-SHA256\", \"uuid\")}}','domain': '{{\"ThreatIntelFeedType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"ThreatIntelFeedType\" | picklist(\"URL\", \"uuid\")}}',\n'ip-dst|port': '{{\"ThreatIntelFeedType\" | picklist(\"Network Activity\", \"uuid\")}}','ip-src': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ip-dst': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}', 'filename': '{{\"ThreatIntelFeedType\" | picklist(\"Filename\", \"uuid\")}}'}"
               },
               "status": null,
               "top": "120",
@@ -174,7 +174,7 @@
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
           "createDate": 1641795883.848899,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641801696.598717,
+          "modifyDate": 1641822631.569153,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -187,12 +187,12 @@
           "tag": null,
           "description": null,
           "isActive": true,
-          "debug": true,
+          "debug": false,
           "singleRecordExecution": false,
           "remoteExecutableFlag": false,
           "parameters": [],
           "synchronous": false,
-          "lastModifyDate": 1641802067,
+          "lastModifyDate": 1641821702,
           "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
@@ -320,7 +320,8 @@
               "arguments": {
                 "for_each": {
                   "item": "{{vars.steps.Get_Collections.data}}",
-                  "parallel": false,
+                  "__bulk": false,
+                  "parallel": true,
                   "condition": ""
                 },
                 "arguments": {
@@ -405,7 +406,7 @@
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
           "createDate": 1641393684.76763,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641802066.854895,
+          "modifyDate": 1641821702.581226,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -425,7 +426,7 @@
             "collection"
           ],
           "synchronous": false,
-          "lastModifyDate": 1641801207,
+          "lastModifyDate": 1641822523,
           "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
@@ -528,7 +529,9 @@
                   "validFrom": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
                   "confidence": "{{ vars.confidence }}",
                   "reputation": "{{ vars.reputation_resolved }}",
+                  "sourceData": "{{ vars.steps.Get_events_for_a_collection.data.Event | toJSON }}",
                   "typeOfFeed": "/api/3/picklists/ec8b8c0a-825e-4c6d-8ad2-628100d6da76",
+                  "description": "<p>{% for value in vars.eventAttributes | json_query(\"[?category=='External analysis'].value\") %}</p>\n<div>&lt;href={{value}}&gt;{{value}}</div>\n<p>{%endfor%}</p>",
                   "relatedMalware": "{% if vars.softwareIDs %}{{vars.softwareIDs}}{%endif%}",
                   "relatedThreatActors": "{% if vars.groupIDs %}{{vars.groupIDs}}{%endif%}",
                   "relatedATTCKTechniques": "{% if vars.techniqueIDs %}{{vars.techniqueIDs}}{%endif%}",
@@ -555,7 +558,7 @@
               "name": "Extract Relations",
               "description": null,
               "arguments": {
-                "mitre_objects": "{% set groups,software,techniques,subTechniques = [],[],[],[] %}{% for tag in vars.steps.Get_events_for_a_collection.data.Event.Tag %}{% if 'mitre-attack-pattern' in tag.name %}{% set t_name='T' + tag.name.split(\"- T\")[1].rstrip('\\\\\"') %}{% if '.' in t_name %}{% set _temp=subTechniques.append(t_name) %}{% else %}{% set _temp=techniques.append(t_name) %}{% endif %}{% elif 'mitre-intrusion-set' in tag.name %}{% set g_name='G' + tag.name.split(\"- G\")[1].rstrip('\\\\\"') %}{% set _temp=groups.append(g_name) %}{% elif 'mitre-malware' in tag.name %}{% set s_name='S' + tag.name.split(\"- S\")[1].rstrip('\\\\\"') %}{% set _temp=software.append(s_name) %}{% endif %}{% endfor %}{\"techniques\": {{techniques}}, \"groups\": {{groups}}, \"software\": {{software}} }"
+                "mitre_objects": "{% set groups,software,techniques,subTechniques = [],[],[],[] %}{% for tag in vars.steps.Get_events_for_a_collection.data.Event.Tag %}{% if 'mitre-attack-pattern' in tag.name %}{% set t_name='T' + tag.name.split(\"- T\")[1].rstrip('\\\\\"') %}{% if '.' in t_name %}{% set _temp=subTechniques.append(t_name) %}{% else %}{% set _temp=techniques.append(t_name) %}{% endif %}{% elif 'mitre-intrusion-set' in tag.name %}{% set g_name='G' + tag.name.split(\"- G\")[1].rstrip('\\\\\"') %}{% set _temp=groups.append(g_name) %}{% elif 'mitre-malware' in tag.name %}{% set s_name='S' + tag.name.split(\"- S\")[1].rstrip('\\\\\"') %}{% set _temp=software.append(s_name) %}{% endif %}{% endfor %}{\"techniques\": {{techniques}}, \"groups\": {{groups}}, \"software\": {{software}}, \"subTechniques\": {{subTechniques}}}"
               },
               "status": null,
               "top": "570",
@@ -638,7 +641,7 @@
               "name": "Find Technique IDs",
               "description": null,
               "arguments": {
-                "when": "{{vars.mitre_objects.groups}}",
+                "when": "{{vars.mitre_objects.techniques}}",
                 "query": {
                   "sort": [],
                   "limit": 30,
@@ -706,14 +709,14 @@
               "arguments": {
                 "arguments": {
                   "eventId": "{{vars.eventID}}",
-                  "attributes": "{{vars.eventAttributes | union(vars.subAttributes)}}"
+                  "attributes": "{{vars.combined_attributes}}"
                 },
                 "apply_async": false,
                 "step_variables": [],
                 "workflowReference": "/api/3/workflows/6ea0c25e-5744-49e3-a37e-87af0a0b64c9"
               },
               "status": null,
-              "top": "160",
+              "top": "300",
               "left": "840",
               "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
               "uuid": "5e036389-3717-4e80-b237-609029d1e685",
@@ -725,7 +728,7 @@
               "description": null,
               "arguments": {
                 "eventID": "{{vars.steps.Create_and_Link_to_Event.uuid}}",
-                "subAttributes": "{{vars.steps.Get_events_for_a_collection.data.Event.Object |  json_query('[][\"Attribute\"][][]')}}"
+                "subAttributes": "{% if Object in vars.steps.Get_events_for_a_collection.data.Event %}{{vars.steps.Get_events_for_a_collection.data.Event.Object |  json_query('[].Attribute[]') }}{% else %}[]{% endif %}"
               },
               "status": null,
               "top": "40",
@@ -733,6 +736,20 @@
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "uuid": "f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
               "id": 1081
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Collect Unique Attributes",
+              "description": null,
+              "arguments": {
+                "combined_attributes": "{% set allValues,allAttribs=[],[] %}{% for attrib in vars.subAttributes %}{% if attrib.to_ids==true and attrib.value not in allValues %}{% set _temp1=allValues.append(attrib.value)%}{% set _temp2=allAttribs.append(attrib)%}{% endif %}{% endfor %}{% for attrib in vars.eventAttributes %}{% if attrib.to_ids==true and attrib.value not in allValues %}{% set _temp1=allValues.append(attrib.value)%}{% set _temp2=allAttribs.append(attrib)%}{% endif %}{% endfor %}{{allAttribs}}"
+              },
+              "status": null,
+              "top": "160",
+              "left": "840",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "4ed84530-7663-48bb-82c2-a38a06560f32",
+              "id": 1082
             }
           ],
           "routes": [
@@ -828,12 +845,21 @@
             },
             {
               "@type": "WorkflowRoute",
-              "name": "Get Sub Attributes -> Create Attribute Records",
-              "targetStep": "/api/3/workflow_steps/5e036389-3717-4e80-b237-609029d1e685",
+              "name": "Get Sub Attributes -> Collect Unique Attributes",
+              "targetStep": "/api/3/workflow_steps/4ed84530-7663-48bb-82c2-a38a06560f32",
               "sourceStep": "/api/3/workflow_steps/f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
               "label": null,
               "isExecuted": false,
-              "uuid": "f105fc05-afe8-4d52-9b1c-e17a8f6772e0"
+              "uuid": "0a7ce85a-79f5-493c-9da9-ea8940487095"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Collect Unique Attributes -> Create Attribute Records",
+              "targetStep": "/api/3/workflow_steps/5e036389-3717-4e80-b237-609029d1e685",
+              "sourceStep": "/api/3/workflow_steps/4ed84530-7663-48bb-82c2-a38a06560f32",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f5cc0c52-4d24-4fd8-9669-9f41f747b062"
             }
           ],
           "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
@@ -847,7 +873,7 @@
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
           "createDate": 1641472547.21123,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641801207.091282,
+          "modifyDate": 1641822523.140284,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
