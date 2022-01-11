@@ -7,8 +7,8 @@
   "cs_compatible": true,
   "version": "1.0.0",
   "category": "Threat Intelligence",
-  "icon_small_name": "circl-misp.png",
-  "icon_large_name": "circl-misp.png",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
   "ingestion_supported": true,
   "ingestion_modes": [
     "scheduled"
