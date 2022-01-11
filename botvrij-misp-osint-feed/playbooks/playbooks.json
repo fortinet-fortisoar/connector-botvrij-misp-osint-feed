@@ -7,7 +7,7 @@
       "description": null,
       "visible": true,
       "image": "medium.png",
-      "uuid": "2b8325c2-860f-4d4f-9e24-c764b49a471e",
+      "uuid": "2b8325c2-860f-4d4f-9e24-c764b49a471d",
       "id": 27,
       "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
       "createDate": 1641393654.544477,
@@ -33,7 +33,7 @@
           ],
           "synchronous": false,
           "lastModifyDate": 1641822631,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
           "steps": [
@@ -146,21 +146,21 @@
             },
             {
               "@type": "WorkflowRoute",
-              "name": "Resolve Range -> Create Record",
-              "targetStep": "/api/3/workflow_steps/f7cfd900-b8b6-4021-8017-7081263dfd33",
-              "sourceStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "1c3c269c-b0bd-480e-a1b3-8f02934c5245"
-            },
-            {
-              "@type": "WorkflowRoute",
               "name": "Start -> Configuration",
               "targetStep": "/api/3/workflow_steps/a62de261-e6cb-45a1-8dc3-a366262a64d4",
               "sourceStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
               "label": null,
               "isExecuted": false,
               "uuid": "664712f3-55f0-47b4-bba2-ac7a3ee690d1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Create Record",
+              "targetStep": "/api/3/workflow_steps/f7cfd900-b8b6-4021-8017-7081263dfd33",
+              "sourceStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "1c3c269c-b0bd-480e-a1b3-8f02934c5245"
             }
           ],
           "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
@@ -193,7 +193,7 @@
           "parameters": [],
           "synchronous": false,
           "lastModifyDate": 1641821702,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
           "steps": [
@@ -399,8 +399,8 @@
           "uuid": "dd81c69b-95c3-4433-a4d1-d046a08808df",
           "recordTags": [
             "dataingestion",
-            "botvrij-misp-osint-feed",
-            "ingest"
+            "ingest",
+            "botvrij-misp-osint-feed"
           ],
           "id": 114,
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
@@ -426,8 +426,8 @@
             "collection"
           ],
           "synchronous": false,
-          "lastModifyDate": 1641822523,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471e",
+          "lastModifyDate": 1641902275,
+          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
           "steps": [
@@ -471,7 +471,7 @@
                 }
               },
               "status": null,
-              "top": "440",
+              "top": "420",
               "left": "120",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "a5083567-b8bb-4473-a1f5-48e5e43284e4",
@@ -506,8 +506,8 @@
                 "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
               },
               "status": null,
-              "top": "300",
-              "left": "125",
+              "top": "280",
+              "left": "120",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "uuid": "db92b642-5ca8-45a8-97af-d701717f8a11",
               "id": 476
@@ -865,15 +865,15 @@
           "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
           "uuid": "e5aebed2-7cf0-4de3-9e8d-888ea62ece99",
           "recordTags": [
-            "botvrij-misp-osint-feed",
-            "datain",
-            "fetch"
+            "dataingestion",
+            "fetch",
+            "botvrij-misp-osint-feed"
           ],
           "id": 115,
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
           "createDate": 1641472547.21123,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641822523.140284,
+          "modifyDate": 1641902275.703464,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -886,7 +886,6 @@
     "create",
     "botvrij-misp-osint-feed",
     "ingest",
-    "datain",
     "fetch"
   ]
 }
