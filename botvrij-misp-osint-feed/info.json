@@ -6,13 +6,19 @@
   "cs_approved": true,
   "cs_compatible": true,
   "version": "1.0.0",
-  "category": "Threat Intelligence",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
+  "category": "Threat Intelligence",
+  "tags": [
+    "threatintel-inbound"
+  ],
   "ingestion_supported": true,
   "ingestion_modes": [
     "scheduled"
   ],
+  "ingestion_preferences": {
+    "modules": ["threat_intel_feeds"]
+  },
   "configuration": {
     "fields": [
       {
