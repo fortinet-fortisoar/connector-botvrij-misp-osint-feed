@@ -2,415 +2,18 @@
   "type": "workflow_collections",
   "data": [
     {
+      "@context": "/api/3/contexts/WorkflowCollection",
       "@type": "WorkflowCollection",
       "name": "Sample - Botvrij.eu MISP OSINT Feed - 1.0.0",
       "description": null,
-      "visible": true,
+      "visible": false,
       "image": "medium.png",
-      "uuid": "2b8325c2-860f-4d4f-9e24-c764b49a471d",
-      "id": 27,
-      "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-      "createDate": 1641393654.544477,
-      "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-      "modifyDate": 1641472045.012621,
+      "id": 124,
+      "createDate": 1641905690.156602,
+      "modifyDate": 1641905690.156602,
       "recordTags": [],
       "deletedAt": null,
       "workflows": [
-        {
-          "@type": "Workflow",
-          "triggerLimit": null,
-          "name": ">> Botvrij.eu > Create",
-          "aliasName": null,
-          "tag": null,
-          "description": null,
-          "isActive": true,
-          "debug": false,
-          "singleRecordExecution": false,
-          "remoteExecutableFlag": false,
-          "parameters": [
-            "attributes",
-            "eventId"
-          ],
-          "synchronous": false,
-          "lastModifyDate": 1641822631,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
-          "versions": [],
-          "triggerStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
-          "steps": [
-            {
-              "@type": "WorkflowStep",
-              "name": "Start",
-              "description": null,
-              "arguments": {
-                "step_variables": {
-                  "input": {
-                    "params": []
-                  }
-                }
-              },
-              "status": null,
-              "top": "20",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
-              "uuid": "f54f199c-ffc0-432a-a592-e2a5c875766b",
-              "id": 1069
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Create Record",
-              "description": null,
-              "arguments": {
-                "for_each": {
-                  "item": "{{vars.input.params.attributes}}",
-                  "__bulk": true,
-                  "parallel": false,
-                  "condition": "{{vars.item.to_ids}}",
-                  "batch_size": 100
-                },
-                "resource": {
-                  "tLP": "{{ vars.tlp_resolved }}",
-                  "value": "{{ vars.item.value }}",
-                  "source": "Botvrij.eu MISP OSINT",
-                  "created": "{{ vars.item.timestamp | int }}",
-                  "pattern": "{{ vars.item.value }}",
-                  "modified": "{{ vars.item.timestamp | int }}",
-                  "sourceId": "{{ vars.item.uuid }}",
-                  "__replace": "",
-                  "expiresOn": "{% if vars.expiry %}{{ (vars.item.timestamp | int) + (vars.expiry | int)*24*60*60 }}{% else %}None{% endif %}",
-                  "validFrom": "{{ vars.item.timestamp | int }}",
-                  "confidence": "{{ vars.confidence }}",
-                  "reputation": "{{ vars.reputation_resolved }}",
-                  "sourceData": "{{ vars.item | toJSON }}",
-                  "typeOfFeed": "{{ vars.item.type | resolveRange(vars.threat_intel_feed_typeOfFeed_map) }}",
-                  "relatedThreatIntelFeeds": [
-                    "{{vars.eventId}}"
-                  ]
-                },
-                "_showJson": false,
-                "collection": "/api/ingest-feeds/threat_intel_feeds",
-                "__recommend": [],
-                "step_variables": []
-              },
-              "status": null,
-              "top": "320",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/7b221880-716b-4726-a2ca-5e568d330b3e",
-              "uuid": "f7cfd900-b8b6-4021-8017-7081263dfd33",
-              "id": 1071
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Configuration",
-              "description": null,
-              "arguments": {
-                "tlp": "White",
-                "expiry": "180",
-                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
-                "confidence": "70",
-                "reputation": "Malicious",
-                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
-                "threat_intel_feed_typeOfFeed_map": "{'md5': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-MD5\", \"uuid\")}}','sha1': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-SHA1\", \"uuid\")}}','sha256': '{{\"ThreatIntelFeedType\" | picklist(\"FileHash-SHA256\", \"uuid\")}}','domain': '{{\"ThreatIntelFeedType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"ThreatIntelFeedType\" | picklist(\"URL\", \"uuid\")}}',\n'ip-dst|port': '{{\"ThreatIntelFeedType\" | picklist(\"Network Activity\", \"uuid\")}}','ip-src': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ip-dst': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"ThreatIntelFeedType\" | picklist(\"IP Address\", \"uuid\")}}', 'filename': '{{\"ThreatIntelFeedType\" | picklist(\"Filename\", \"uuid\")}}'}"
-              },
-              "status": null,
-              "top": "120",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "a62de261-e6cb-45a1-8dc3-a366262a64d4",
-              "id": 1072
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Resolve Range",
-              "description": null,
-              "arguments": {
-                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
-                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
-              },
-              "status": null,
-              "top": "220",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "1a7e68bf-7a04-4356-9fa5-5d06680158e4",
-              "id": 1073
-            }
-          ],
-          "routes": [
-            {
-              "@type": "WorkflowRoute",
-              "name": "Configuration -> Resolve Range",
-              "targetStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
-              "sourceStep": "/api/3/workflow_steps/a62de261-e6cb-45a1-8dc3-a366262a64d4",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "09d2c16b-3185-4732-abb8-912ce49a516c"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Start -> Configuration",
-              "targetStep": "/api/3/workflow_steps/a62de261-e6cb-45a1-8dc3-a366262a64d4",
-              "sourceStep": "/api/3/workflow_steps/f54f199c-ffc0-432a-a592-e2a5c875766b",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "664712f3-55f0-47b4-bba2-ac7a3ee690d1"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Resolve Range -> Create Record",
-              "targetStep": "/api/3/workflow_steps/f7cfd900-b8b6-4021-8017-7081263dfd33",
-              "sourceStep": "/api/3/workflow_steps/1a7e68bf-7a04-4356-9fa5-5d06680158e4",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "1c3c269c-b0bd-480e-a1b3-8f02934c5245"
-            }
-          ],
-          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
-          "uuid": "6ea0c25e-5744-49e3-a37e-87af0a0b64c9",
-          "recordTags": [
-            "dataingestion",
-            "create",
-            "botvrij-misp-osint-feed"
-          ],
-          "id": 188,
-          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "createDate": 1641795883.848899,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641822631.569153,
-          "owners": [],
-          "isPrivate": false,
-          "deletedAt": null
-        },
-        {
-          "@type": "Workflow",
-          "triggerLimit": null,
-          "name": "Botvrij.eu OSINT Feed > Ingest",
-          "aliasName": null,
-          "tag": null,
-          "description": null,
-          "isActive": true,
-          "debug": false,
-          "singleRecordExecution": false,
-          "remoteExecutableFlag": false,
-          "parameters": [],
-          "synchronous": false,
-          "lastModifyDate": 1641821702,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
-          "versions": [],
-          "triggerStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
-          "steps": [
-            {
-              "@type": "WorkflowStep",
-              "name": "Start",
-              "description": null,
-              "arguments": {
-                "step_variables": {
-                  "input": {
-                    "params": []
-                  }
-                }
-              },
-              "status": null,
-              "top": "30",
-              "left": "125",
-              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
-              "uuid": "4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
-              "id": 465
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Get Collections",
-              "description": null,
-              "arguments": {
-                "name": "Botvrij.eu MISP OSINT Feed",
-                "config": "a50271cb-6910-4276-a6c2-578e9fc76e37",
-                "params": {
-                  "modified_after": "{{vars.lastPullTime}}"
-                },
-                "version": "1.0.0",
-                "connector": "botvrij-misp-osint-feed",
-                "operation": "get_collections",
-                "operationTitle": "Get Collections",
-                "pickFromTenant": false,
-                "step_variables": []
-              },
-              "status": null,
-              "top": "360",
-              "left": "780",
-              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
-              "uuid": "2f147ba2-bd2b-430a-908e-aba0235a55b8",
-              "id": 466
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Get Macro Value",
-              "description": null,
-              "arguments": {
-                "params": {
-                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.pullTimeMacro}}",
-                  "body": "",
-                  "method": "GET"
-                },
-                "version": "3.1.2",
-                "connector": "cyops_utilities",
-                "operation": "make_cyops_request",
-                "operationTitle": "FSR: Make FortiSOAR API Call",
-                "step_variables": []
-              },
-              "status": null,
-              "top": "200",
-              "left": "460",
-              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
-              "uuid": "12485a8f-93fa-456c-ba7f-a41e4e8e3555",
-              "id": 467
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Configuration",
-              "description": null,
-              "arguments": {
-                "fetchTime": "{{arrow.utcnow().int_timestamp}}",
-                "pullTimeMacro": "BotvrijMISPFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
-              },
-              "status": null,
-              "top": "120",
-              "left": "280",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "515b908c-8e47-4af2-a5ba-a46da1cc47cf",
-              "id": 468
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Update Pull Time",
-              "description": null,
-              "arguments": {
-                "params": {
-                  "macro": "{{vars.pullTimeMacro}}",
-                  "value": "{{vars.fetchTime}}"
-                },
-                "version": "3.1.2",
-                "connector": "cyops_utilities",
-                "operation": "updatemacro",
-                "operationTitle": "CyOPs: Update Macro",
-                "step_variables": []
-              },
-              "status": null,
-              "top": "520",
-              "left": "1100",
-              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
-              "uuid": "d8a64d5f-84c5-468d-9183-ab1b692da022",
-              "id": 469
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Extract Value from Response",
-              "description": null,
-              "arguments": {
-                "lastPullTime": "{% if (vars.steps.Get_Macro_Value.data[\"hydra:member\"] | length) > 0%}{{vars.steps.Get_Macro_Value.data[\"hydra:member\"][0].value }}{% else %}0{% endif %}"
-              },
-              "status": null,
-              "top": "280",
-              "left": "620",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
-              "id": 470
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Fetch each collection",
-              "description": null,
-              "arguments": {
-                "for_each": {
-                  "item": "{{vars.steps.Get_Collections.data}}",
-                  "__bulk": false,
-                  "parallel": true,
-                  "condition": ""
-                },
-                "arguments": {
-                  "collection": "{{ vars.item }}"
-                },
-                "apply_async": false,
-                "step_variables": [],
-                "workflowReference": "/api/3/workflows/e5aebed2-7cf0-4de3-9e8d-888ea62ece99"
-              },
-              "status": null,
-              "top": "440",
-              "left": "940",
-              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
-              "uuid": "baf2590f-fe03-4a81-be81-20113450e58a",
-              "id": 473
-            }
-          ],
-          "routes": [
-            {
-              "@type": "WorkflowRoute",
-              "name": "Configuration -> Get Macro Value",
-              "targetStep": "/api/3/workflow_steps/12485a8f-93fa-456c-ba7f-a41e4e8e3555",
-              "sourceStep": "/api/3/workflow_steps/515b908c-8e47-4af2-a5ba-a46da1cc47cf",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "ab26ecea-9ceb-4617-a980-96a85bbee291"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Start -> Configuration",
-              "targetStep": "/api/3/workflow_steps/515b908c-8e47-4af2-a5ba-a46da1cc47cf",
-              "sourceStep": "/api/3/workflow_steps/4adbd1ed-299c-4f42-abcf-8b7a3a3945a5",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "20ce9bc4-f32b-45ab-8426-1f75fd1b6120"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Get Macro Value -> Extract Value from Response",
-              "targetStep": "/api/3/workflow_steps/10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
-              "sourceStep": "/api/3/workflow_steps/12485a8f-93fa-456c-ba7f-a41e4e8e3555",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "04271de4-7bdb-413a-b470-b68436571f25"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Extract Value from Response -> Get Collections",
-              "targetStep": "/api/3/workflow_steps/2f147ba2-bd2b-430a-908e-aba0235a55b8",
-              "sourceStep": "/api/3/workflow_steps/10e2fb4c-75c4-49bf-ba41-e06e8a87d014",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "277484e0-a4bf-4585-8b69-f8a09def36ea"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Get Collections -> Fetch each collection",
-              "targetStep": "/api/3/workflow_steps/baf2590f-fe03-4a81-be81-20113450e58a",
-              "sourceStep": "/api/3/workflow_steps/2f147ba2-bd2b-430a-908e-aba0235a55b8",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "ad41406d-ed98-4ded-8a06-758593ff0ea1"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Fetch each collection -> Update Pull Time",
-              "targetStep": "/api/3/workflow_steps/d8a64d5f-84c5-468d-9183-ab1b692da022",
-              "sourceStep": "/api/3/workflow_steps/baf2590f-fe03-4a81-be81-20113450e58a",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "2b4a85e5-0ac2-4f19-9bf5-dc7270f4c753"
-            }
-          ],
-          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
-          "uuid": "dd81c69b-95c3-4433-a4d1-d046a08808df",
-          "recordTags": [
-            "dataingestion",
-            "ingest",
-            "botvrij-misp-osint-feed"
-          ],
-          "id": 114,
-          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "createDate": 1641393684.76763,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641821702.581226,
-          "owners": [],
-          "isPrivate": false,
-          "deletedAt": null
-        },
         {
           "@type": "Workflow",
           "triggerLimit": null,
@@ -418,7 +21,7 @@
           "aliasName": null,
           "tag": null,
           "description": null,
-          "isActive": true,
+          "isActive": false,
           "debug": false,
           "singleRecordExecution": false,
           "remoteExecutableFlag": false,
@@ -426,10 +29,10 @@
             "collection"
           ],
           "synchronous": false,
-          "lastModifyDate": 1641902275,
-          "collection": "/api/3/workflow_collections/2b8325c2-860f-4d4f-9e24-c764b49a471d",
+          "lastModifyDate": 1642418421,
+          "collection": "/api/3/workflow_collections/a7031136-bb92-4caf-88a7-ee1d0208abb3",
           "versions": [],
-          "triggerStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
+          "triggerStep": "/api/3/workflow_steps/752fe597-2e06-4c4f-af5d-062fff9a0ae0",
           "steps": [
             {
               "@type": "WorkflowStep",
@@ -439,15 +42,16 @@
                 "step_variables": {
                   "input": {
                     "params": []
-                  }
+                  },
+                  "_configuration_schema": "[\n  {\n    \"title\": \"Confidence\",\n    \"name\": \"confidence\",\n    \"type\": \"integer\",\n    \"tooltip\": \"Default Confidence score to be set for the feeds\",\n    \"required\": false,\n    \"editable\": true,\n    \"visible\": true,\n    \"value\": 50,\n    \"validation\": {\n       \"minlength\": 0,\n       \"maxlength\": 100\n    }\n  },\n  {\n    \"title\": \"Reputation\",\n    \"name\": \"reputation\",\n    \"type\": \"select\",\n    \"tooltip\": \"Default Reputation to be set for the feeds\",\n    \"required\": true,\n    \"editable\": true,\n    \"visible\": true,\n    \"options\": [\"Good\", \"Suspicious\", \"Malicious\", \"No Reputation Available\", \"TBD\"],\n    \"value\": \"Suspicious\"\n  },\n  {\n    \"title\": \"TLP\",\n    \"name\": \"tlp\",\n    \"type\": \"select\",\n    \"tooltip\": \"Default TLP to be set for the feeds\",\n    \"required\": false,\n    \"editable\": true,\n    \"visible\": true,\n    \"options\": [\"Red\", \"Amber\", \"Green\", \"White\"],\n    \"value\": \"White\"\n  },\n  {\n    \"title\": \"Maximum Age (in days)\",\n    \"name\": \"expiry\",\n    \"type\": \"integer\",\n    \"tooltip\": \"Default age for the feeds. The indicator expires on 'valid_until' date unless a different expiry is specified here. If specified, the indicator will be marked expired on valid_from + expiry.\",\n    \"required\": false,\n    \"editable\": true,\n    \"value\": 90,\n    \"visible\": true\n  }\n]"
                 }
               },
               "status": null,
-              "top": "30",
-              "left": "125",
+              "top": "40",
+              "left": "40",
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
-              "uuid": "2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
-              "id": 471
+              "uuid": "752fe597-2e06-4c4f-af5d-062fff9a0ae0",
+              "id": 5597
             },
             {
               "@type": "WorkflowStep",
@@ -455,7 +59,7 @@
               "description": null,
               "arguments": {
                 "name": "Botvrij.eu MISP OSINT Feed",
-                "config": "a50271cb-6910-4276-a6c2-578e9fc76e37",
+                "config": "a7031136-bb92-4caf-88a7-ee1d0208abb3",
                 "params": {
                   "output_mode": "Return as a JSON",
                   "collectionID": "{{vars.input.params.collection}}",
@@ -471,46 +75,11 @@
                 }
               },
               "status": null,
-              "top": "420",
-              "left": "120",
+              "top": "460",
+              "left": "400",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
-              "uuid": "a5083567-b8bb-4473-a1f5-48e5e43284e4",
-              "id": 472
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Configuration",
-              "description": null,
-              "arguments": {
-                "tlp": "Amber",
-                "expiry": "180",
-                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
-                "confidence": "70",
-                "reputation": "Malicious",
-                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
-                "threat_intel_feed_typeoffeed_map": "{'md5': '{{\"IndicatorType\" | picklist(\"Domain\", \"uuid\")}}','url': '{{\"IndicatorType\" | picklist(\"URL\", \"uuid\")}}',\n'network-traffic': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}','ipv4-addr': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}','ipv6-addr': '{{\"IndicatorType\" | picklist(\"IP Address\", \"uuid\")}}'}"
-              },
-              "status": null,
-              "top": "165",
-              "left": "125",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
-              "id": 475
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Resolve Range",
-              "description": null,
-              "arguments": {
-                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
-                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
-              },
-              "status": null,
-              "top": "280",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "db92b642-5ca8-45a8-97af-d701717f8a11",
-              "id": 476
+              "uuid": "4c0eace9-00d6-4c45-80ab-079fa7160a8e",
+              "id": 5598
             },
             {
               "@type": "WorkflowStep",
@@ -547,11 +116,11 @@
                 "step_variables": []
               },
               "status": null,
-              "top": "560",
-              "left": "480",
+              "top": "660",
+              "left": "760",
               "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
-              "uuid": "73cf2d81-f235-41b9-a500-086ad28fb43a",
-              "id": 477
+              "uuid": "16f0781a-5b91-4b39-a350-5e126c72d61d",
+              "id": 5599
             },
             {
               "@type": "WorkflowStep",
@@ -561,11 +130,11 @@
                 "mitre_objects": "{% set groups,software,techniques,subTechniques = [],[],[],[] %}{% for tag in vars.steps.Get_events_for_a_collection.data.Event.Tag %}{% if 'mitre-attack-pattern' in tag.name %}{% set t_name='T' + tag.name.split(\"- T\")[1].rstrip('\\\\\"') %}{% if '.' in t_name %}{% set _temp=subTechniques.append(t_name) %}{% else %}{% set _temp=techniques.append(t_name) %}{% endif %}{% elif 'mitre-intrusion-set' in tag.name %}{% set g_name='G' + tag.name.split(\"- G\")[1].rstrip('\\\\\"') %}{% set _temp=groups.append(g_name) %}{% elif 'mitre-malware' in tag.name %}{% set s_name='S' + tag.name.split(\"- S\")[1].rstrip('\\\\\"') %}{% set _temp=software.append(s_name) %}{% endif %}{% endfor %}{\"techniques\": {{techniques}}, \"groups\": {{groups}}, \"software\": {{software}}, \"subTechniques\": {{subTechniques}}}"
               },
               "status": null,
-              "top": "570",
-              "left": "125",
+              "top": "560",
+              "left": "400",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "3aff0ab5-7f56-4568-8adb-8458df1504c0",
-              "id": 1060
+              "uuid": "ebde9e79-7df6-435a-8292-2c029987af95",
+              "id": 5600
             },
             {
               "@type": "WorkflowStep",
@@ -597,11 +166,11 @@
                 }
               },
               "status": null,
-              "top": "40",
-              "left": "480",
+              "top": "660",
+              "left": "400",
               "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
-              "uuid": "9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
-              "id": 1061
+              "uuid": "5e050938-3c66-41b3-ae9f-167c5519da65",
+              "id": 5601
             },
             {
               "@type": "WorkflowStep",
@@ -630,11 +199,11 @@
                 }
               },
               "status": null,
-              "top": "300",
-              "left": "480",
+              "top": "460",
+              "left": "760",
               "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
-              "uuid": "b6de275f-c634-4bb3-a561-771591f5fa58",
-              "id": 1062
+              "uuid": "7ce65f27-6691-4ef1-aff0-75814fef76d7",
+              "id": 5602
             },
             {
               "@type": "WorkflowStep",
@@ -663,11 +232,11 @@
                 }
               },
               "status": null,
-              "top": "160",
-              "left": "480",
+              "top": "760",
+              "left": "400",
               "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
-              "uuid": "a0a92eb6-e719-4626-b44d-420adc15e5c2",
-              "id": 1063
+              "uuid": "0346b457-ceab-4567-a3df-c2e28aa59340",
+              "id": 5603
             },
             {
               "@type": "WorkflowStep",
@@ -696,11 +265,11 @@
                 }
               },
               "status": null,
-              "top": "440",
-              "left": "480",
+              "top": "560",
+              "left": "760",
               "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
-              "uuid": "ecd2b43b-6b6f-4149-831b-28d074597123",
-              "id": 1064
+              "uuid": "0b63cd27-a68b-48b4-9340-7d9900ff2dad",
+              "id": 5604
             },
             {
               "@type": "WorkflowStep",
@@ -708,19 +277,23 @@
               "description": null,
               "arguments": {
                 "arguments": {
+                  "tlp": "{{vars.tlp}}",
+                  "expiry": "{{vars.expiry}}",
                   "eventId": "{{vars.eventID}}",
-                  "attributes": "{{vars.combined_attributes}}"
+                  "attributes": "{{vars.combined_attributes}}",
+                  "confidence": "{{vars.confidence}}",
+                  "reputation": "{{vars.reputation}}"
                 },
                 "apply_async": false,
                 "step_variables": [],
-                "workflowReference": "/api/3/workflows/6ea0c25e-5744-49e3-a37e-87af0a0b64c9"
+                "workflowReference": "/api/3/workflows/c1721e7c-5816-414a-997f-84bbc7c24c95"
               },
               "status": null,
-              "top": "300",
-              "left": "840",
+              "top": "660",
+              "left": "1140",
               "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
-              "uuid": "5e036389-3717-4e80-b237-609029d1e685",
-              "id": 1080
+              "uuid": "191cbc38-9746-40d9-9670-d78ad6fba0b8",
+              "id": 5605
             },
             {
               "@type": "WorkflowStep",
@@ -731,11 +304,11 @@
                 "subAttributes": "{% if Object in vars.steps.Get_events_for_a_collection.data.Event %}{{vars.steps.Get_events_for_a_collection.data.Event.Object |  json_query('[].Attribute[]') }}{% else %}[]{% endif %}"
               },
               "status": null,
-              "top": "40",
-              "left": "840",
+              "top": "440",
+              "left": "1140",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
-              "id": 1081
+              "uuid": "f6b62049-1a9f-427c-a532-eb07c0bbb39b",
+              "id": 5606
             },
             {
               "@type": "WorkflowStep",
@@ -745,135 +318,629 @@
                 "combined_attributes": "{% set allValues,allAttribs=[],[] %}{% for attrib in vars.subAttributes %}{% if attrib.to_ids==true and attrib.value not in allValues %}{% set _temp1=allValues.append(attrib.value)%}{% set _temp2=allAttribs.append(attrib)%}{% endif %}{% endfor %}{% for attrib in vars.eventAttributes %}{% if attrib.to_ids==true and attrib.value not in allValues %}{% set _temp1=allValues.append(attrib.value)%}{% set _temp2=allAttribs.append(attrib)%}{% endif %}{% endfor %}{{allAttribs}}"
               },
               "status": null,
-              "top": "160",
-              "left": "840",
+              "top": "540",
+              "left": "1140",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "4ed84530-7663-48bb-82c2-a38a06560f32",
-              "id": 1082
+              "uuid": "70711224-a7dc-4beb-9681-fe4485d9646c",
+              "id": 5607
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Is Data Only For Mapping",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Yes, For Mapping",
+                    "step_iri": "/api/3/workflow_steps/8299f32d-40ce-40cf-afe8-aa95558cc770",
+                    "condition": "{{ vars.request.env_setup == true }}",
+                    "step_name": "Return Sample Data"
+                  },
+                  {
+                    "option": "No, For Ingestion",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/4c0eace9-00d6-4c45-80ab-079fa7160a8e",
+                    "step_name": "Get events for a collection"
+                  }
+                ]
+              },
+              "status": null,
+              "top": "380",
+              "left": "40",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "uuid": "e93e785c-b5c4-476b-b12c-6d2e0fd582c2",
+              "id": 5608
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Return Sample Data",
+              "description": null,
+              "arguments": {
+                "data": "[\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"777f4acb-9106-4ef1-b25f-64a00498b7b2\",\n          \"value\": \"f50de0fae860a5fd780d953a8af07450661458646293bfd0fed81a1ff9eb4498\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX malware\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"bfc36f64-f413-4456-b655-626336b6eed3\",\n          \"value\": \"26e448fe1105b5dadae9b7607e3cca366c6ba8eccf5b6efe67b87c312651db01\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX malware\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"c3937a10-2305-4427-b91f-1f83fe427da4\",\n          \"value\": \"e9033a5db456af922a82e1d44afc3e8e4a5732efde3e9461c1d8f7629aa55caf\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX malware\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"7f800bac-5b3e-4d92-890a-3f924087c45a\",\n          \"value\": \"3124fcb79da0bdf9d0d1995e37b06f7929d83c1c4b60e38c104743be71170efe\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX malware\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"b34155e2-33f2-475f-a4ac-c82fb2e0db64\",\n          \"value\": \"800238bc27ca94279c7562f1f70241ef3a37937c15d051894472e97852ebe9f4\",\n          \"to_ids\": true,\n          \"comment\": \"Winnti\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"5e2e1a26-e3fd-495a-ae5c-7b73213e539d\",\n          \"value\": \"c3c8f6befa32edd09de3018a7be7f0b7144702cb7c626f9d8d8d9a77e201d104\",\n          \"to_ids\": true,\n          \"comment\": \"Winnti\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"153d4fb8-f564-4f34-b7d4-e4e3dc13718d\",\n          \"value\": \"df951bf75770b0f597f0296a644d96fbe9a3a8c556f4d2a2479a7bad39e7ad5f\",\n          \"to_ids\": true,\n          \"comment\": \"Winnti\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"ip-dst\",\n          \"uuid\": \"7deb0600-208c-47ff-b455-90367b1d08d5\",\n          \"value\": \"185.161.211.97\",\n          \"to_ids\": true,\n          \"comment\": \"Winnti C2\",\n          \"category\": \"Network activity\",\n          \"timestamp\": \"1633469011\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"hostname\",\n          \"uuid\": \"56effb03-7844-4a4d-ab1c-a3e7954fce6f\",\n          \"value\": \"sery.brushupdata.com\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX C2\",\n          \"category\": \"Network activity\",\n          \"timestamp\": \"1633469080\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"hostname\",\n          \"uuid\": \"14d9015f-1e74-4255-a23f-ea0b2cc6a2b7\",\n          \"value\": \"dnssery.brushupdata.com\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX C2\",\n          \"category\": \"Network activity\",\n          \"timestamp\": \"1633469080\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"hostname\",\n          \"uuid\": \"c82dada0-1bee-4fb6-af51-d67eb7b84889\",\n          \"value\": \"center.asmlbigip.com\",\n          \"to_ids\": true,\n          \"comment\": \"PlugX C2\",\n          \"category\": \"Network activity\",\n          \"timestamp\": \"1633469080\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"bd733a59-46ad-4c0b-ab75-7c5e6c80dde1\",\n          \"value\": \"6e983477f72c8575f8f3ff5731b74e20877b3971fa2d47683aff11cfd71b48c6\",\n          \"to_ids\": true,\n          \"comment\": \"PSW64\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"0e7374b5-c04b-4b3e-b01d-537e428aef95\",\n          \"value\": \"6db8336794a351888636cb26ebefb52aeaa4b7f90dbb3e6440c2a28e4f13ef96\",\n          \"to_ids\": true,\n          \"comment\": \"NTDSDumpEx\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"a84d2412-5305-4f03-b668-c956a38b6495\",\n          \"value\": \"c9d5dc956841e000bfd8762e2f0b48b66c79b79500e894b4efa7fb9ba17e4e9e\",\n          \"to_ids\": true,\n          \"comment\": \"NBTSCAN\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"58c54250-760f-4b5f-a20d-e4f597838754\",\n          \"value\": \"ddeeedc8ab9ab3b90c2e36340d4674fda3b458c0afd7514735b2857f26b14c6d\",\n          \"to_ids\": true,\n          \"comment\": \"NetSess\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"2b840321-bfcf-4419-94d0-7d8cc8a2ac50\",\n          \"value\": \"e781ce2d795c5dd6b0a5b849a414f5bd05bb99785f2ebf36edb70399205817ee\",\n          \"to_ids\": true,\n          \"comment\": \"Smbexec\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"sha256\",\n          \"uuid\": \"cd5e2a0d-7f19-4b3d-a434-7e4bb82bee87\",\n          \"value\": \"14f0c4ce32821a7d25ea5e016ea26067d6615e3336c3baa854ea37a290a462a8\",\n          \"to_ids\": true,\n          \"comment\": \"Wmiexec\",\n          \"category\": \"Payload delivery\",\n          \"timestamp\": \"1633469126\",\n          \"object_relation\": null\n        },\n        {\n          \"type\": \"link\",\n          \"uuid\": \"6b7d6858-7bb7-4442-9398-ec123d87f63f\",\n          \"value\": \"https://www.mcafee.com/blogs/enterprise/mcafee-enterprise-atr/operation-harvest-a-deep-dive-into-a-long-term-campaign/\",\n          \"to_ids\": false,\n          \"comment\": \"\",\n          \"category\": \"External analysis\",\n          \"timestamp\": \"1633469140\",\n          \"object_relation\": null\n        }\n      ]"
+              },
+              "status": null,
+              "top": "240",
+              "left": "380",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "8299f32d-40ce-40cf-afe8-aa95558cc770",
+              "id": 5609
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "White",
+                "expiry": "180",
+                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
+                "confidence": "70",
+                "reputation": "Malicious",
+                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}"
+              },
+              "status": null,
+              "top": "140",
+              "left": "40",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "422ad9c4-c5e8-4fd7-840a-d3115e9d8a69",
+              "id": 5610
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
+              },
+              "status": null,
+              "top": "260",
+              "left": "40",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "6a7e154d-770d-419f-9b12-9f9f53244529",
+              "id": 5611
             }
           ],
           "routes": [
             {
               "@type": "WorkflowRoute",
-              "name": "Configuration -> Resolve Range",
-              "targetStep": "/api/3/workflow_steps/db92b642-5ca8-45a8-97af-d701717f8a11",
-              "sourceStep": "/api/3/workflow_steps/8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "152e8fa2-14e7-4e9b-b385-a68046f20a38"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Start -> Configuration",
-              "targetStep": "/api/3/workflow_steps/8661ec47-2e3c-47be-8c0a-a2bf974aa64a",
-              "sourceStep": "/api/3/workflow_steps/2732d7d0-4267-4675-96d1-ad2e4fddc2f3",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "172ca2da-adb1-4df1-bebc-81745fdb292a"
-            },
-            {
-              "@type": "WorkflowRoute",
-              "name": "Resolve Range -> Get events for a collection",
-              "targetStep": "/api/3/workflow_steps/a5083567-b8bb-4473-a1f5-48e5e43284e4",
-              "sourceStep": "/api/3/workflow_steps/db92b642-5ca8-45a8-97af-d701717f8a11",
-              "label": null,
-              "isExecuted": false,
-              "uuid": "5dc9305f-4be3-438e-a900-d7a457bb3886"
-            },
-            {
-              "@type": "WorkflowRoute",
               "name": "Extract Relations -> Find Group IDs",
-              "targetStep": "/api/3/workflow_steps/9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
-              "sourceStep": "/api/3/workflow_steps/3aff0ab5-7f56-4568-8adb-8458df1504c0",
+              "targetStep": "/api/3/workflow_steps/5e050938-3c66-41b3-ae9f-167c5519da65",
+              "sourceStep": "/api/3/workflow_steps/ebde9e79-7df6-435a-8292-2c029987af95",
               "label": null,
               "isExecuted": false,
-              "uuid": "864ac287-1a56-41a6-9d50-8a6f90922a81"
+              "uuid": "a8919862-be46-4514-8ab3-07f3cc312201"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Find Group IDs -> Copy 1 of Find Group IDs",
-              "targetStep": "/api/3/workflow_steps/a0a92eb6-e719-4626-b44d-420adc15e5c2",
-              "sourceStep": "/api/3/workflow_steps/9f9d702e-d783-4c0d-bfb4-4d5c2177a9c0",
+              "targetStep": "/api/3/workflow_steps/0346b457-ceab-4567-a3df-c2e28aa59340",
+              "sourceStep": "/api/3/workflow_steps/5e050938-3c66-41b3-ae9f-167c5519da65",
               "label": null,
               "isExecuted": false,
-              "uuid": "ec66824f-5fca-4913-9acc-6e111bf0210f"
+              "uuid": "0de01ff5-9743-4a3f-8388-d3c8e0261c87"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Find Technique IDs -> Copy of Find Group IDs",
-              "targetStep": "/api/3/workflow_steps/b6de275f-c634-4bb3-a561-771591f5fa58",
-              "sourceStep": "/api/3/workflow_steps/a0a92eb6-e719-4626-b44d-420adc15e5c2",
+              "targetStep": "/api/3/workflow_steps/7ce65f27-6691-4ef1-aff0-75814fef76d7",
+              "sourceStep": "/api/3/workflow_steps/0346b457-ceab-4567-a3df-c2e28aa59340",
               "label": null,
               "isExecuted": false,
-              "uuid": "6ca47864-d614-4692-9958-a3db1f2e9946"
+              "uuid": "491dd9ea-bcdf-448d-b23f-a4afd7b0ad4e"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Find Software IDs -> Copy 2 of Find Group IDs",
-              "targetStep": "/api/3/workflow_steps/ecd2b43b-6b6f-4149-831b-28d074597123",
-              "sourceStep": "/api/3/workflow_steps/b6de275f-c634-4bb3-a561-771591f5fa58",
+              "targetStep": "/api/3/workflow_steps/0b63cd27-a68b-48b4-9340-7d9900ff2dad",
+              "sourceStep": "/api/3/workflow_steps/7ce65f27-6691-4ef1-aff0-75814fef76d7",
               "label": null,
               "isExecuted": false,
-              "uuid": "ee136af7-528a-46cf-8814-3e7c0c4d8135"
+              "uuid": "feae809e-e2f6-4da1-bcc6-6b2123620f91"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Find SubTechnique IDs -> Create and Link to Event",
-              "targetStep": "/api/3/workflow_steps/73cf2d81-f235-41b9-a500-086ad28fb43a",
-              "sourceStep": "/api/3/workflow_steps/ecd2b43b-6b6f-4149-831b-28d074597123",
+              "targetStep": "/api/3/workflow_steps/16f0781a-5b91-4b39-a350-5e126c72d61d",
+              "sourceStep": "/api/3/workflow_steps/0b63cd27-a68b-48b4-9340-7d9900ff2dad",
               "label": null,
               "isExecuted": false,
-              "uuid": "e9912a0d-3d76-438f-97c9-0d29c49a08c4"
+              "uuid": "0c813636-9420-4bed-9310-cef10ccd929a"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Get events for a collection -> Extract Relations",
-              "targetStep": "/api/3/workflow_steps/3aff0ab5-7f56-4568-8adb-8458df1504c0",
-              "sourceStep": "/api/3/workflow_steps/a5083567-b8bb-4473-a1f5-48e5e43284e4",
+              "targetStep": "/api/3/workflow_steps/ebde9e79-7df6-435a-8292-2c029987af95",
+              "sourceStep": "/api/3/workflow_steps/4c0eace9-00d6-4c45-80ab-079fa7160a8e",
               "label": null,
               "isExecuted": false,
-              "uuid": "ad9054e2-f6fa-492e-a34c-939db933976e"
+              "uuid": "ec6a3b1d-3734-449c-9eda-ee8ec7bfc1f6"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Create and Link to Event -> Get Sub Attributes",
-              "targetStep": "/api/3/workflow_steps/f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
-              "sourceStep": "/api/3/workflow_steps/73cf2d81-f235-41b9-a500-086ad28fb43a",
+              "targetStep": "/api/3/workflow_steps/f6b62049-1a9f-427c-a532-eb07c0bbb39b",
+              "sourceStep": "/api/3/workflow_steps/16f0781a-5b91-4b39-a350-5e126c72d61d",
               "label": null,
               "isExecuted": false,
-              "uuid": "0195cbe8-86c7-4d59-86fb-19127040eb73"
+              "uuid": "b40d44a2-e890-4820-ba9a-809f91102bf6"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Get Sub Attributes -> Collect Unique Attributes",
-              "targetStep": "/api/3/workflow_steps/4ed84530-7663-48bb-82c2-a38a06560f32",
-              "sourceStep": "/api/3/workflow_steps/f50f0a5e-1b6e-40fe-a5a5-325227a5133f",
+              "targetStep": "/api/3/workflow_steps/70711224-a7dc-4beb-9681-fe4485d9646c",
+              "sourceStep": "/api/3/workflow_steps/f6b62049-1a9f-427c-a532-eb07c0bbb39b",
               "label": null,
               "isExecuted": false,
-              "uuid": "0a7ce85a-79f5-493c-9da9-ea8940487095"
+              "uuid": "9a0f1da4-3ced-49cc-b234-f15122f3200c"
             },
             {
               "@type": "WorkflowRoute",
               "name": "Collect Unique Attributes -> Create Attribute Records",
-              "targetStep": "/api/3/workflow_steps/5e036389-3717-4e80-b237-609029d1e685",
-              "sourceStep": "/api/3/workflow_steps/4ed84530-7663-48bb-82c2-a38a06560f32",
+              "targetStep": "/api/3/workflow_steps/191cbc38-9746-40d9-9670-d78ad6fba0b8",
+              "sourceStep": "/api/3/workflow_steps/70711224-a7dc-4beb-9681-fe4485d9646c",
               "label": null,
               "isExecuted": false,
-              "uuid": "f5cc0c52-4d24-4fd8-9669-9f41f747b062"
+              "uuid": "551f85f6-0426-44f8-853c-012cc87cf8b0"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is Data Only For Mapping -> Return Sample Data",
+              "targetStep": "/api/3/workflow_steps/8299f32d-40ce-40cf-afe8-aa95558cc770",
+              "sourceStep": "/api/3/workflow_steps/e93e785c-b5c4-476b-b12c-6d2e0fd582c2",
+              "label": "Yes, For Mapping",
+              "isExecuted": false,
+              "uuid": "bc7870c2-eb08-4904-913a-f28ff3d419f1"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is Data Only For Mapping -> Get events for a collection",
+              "targetStep": "/api/3/workflow_steps/4c0eace9-00d6-4c45-80ab-079fa7160a8e",
+              "sourceStep": "/api/3/workflow_steps/e93e785c-b5c4-476b-b12c-6d2e0fd582c2",
+              "label": "No, For Ingestion",
+              "isExecuted": false,
+              "uuid": "c42aba1c-e1ac-429c-868b-0603eb19626a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/422ad9c4-c5e8-4fd7-840a-d3115e9d8a69",
+              "sourceStep": "/api/3/workflow_steps/752fe597-2e06-4c4f-af5d-062fff9a0ae0",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f0887211-0a87-45fe-b002-6df7c5cced6a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Resolve Range",
+              "targetStep": "/api/3/workflow_steps/6a7e154d-770d-419f-9b12-9f9f53244529",
+              "sourceStep": "/api/3/workflow_steps/422ad9c4-c5e8-4fd7-840a-d3115e9d8a69",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ffc57362-aba6-475d-9510-aa158534400a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Is Data Only For Mapping",
+              "targetStep": "/api/3/workflow_steps/e93e785c-b5c4-476b-b12c-6d2e0fd582c2",
+              "sourceStep": "/api/3/workflow_steps/6a7e154d-770d-419f-9b12-9f9f53244529",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "cb2e377a-a9fe-4224-a737-898a3767ed35"
             }
           ],
           "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
-          "uuid": "e5aebed2-7cf0-4de3-9e8d-888ea62ece99",
+          "uuid": "949c3b86-a9ac-45a5-bfe9-8ee311576ccf",
           "recordTags": [
             "dataingestion",
             "fetch",
             "botvrij-misp-osint-feed"
           ],
-          "id": 115,
+          "id": 1319,
           "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "createDate": 1641472547.21123,
+          "createDate": 1642409204.48883,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1641902275.703464,
+          "modifyDate": 1642419159.608,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Botvrij.eu OSINT Feed > Ingest",
+          "aliasName": null,
+          "tag": null,
+          "description": null,
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1642418182,
+          "collection": "/api/3/workflow_collections/a7031136-bb92-4caf-88a7-ee1d0208abb3",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/1ee3fea3-fe50-4ee9-97d2-ec66efc893f7",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "1ee3fea3-fe50-4ee9-97d2-ec66efc893f7",
+              "id": 5590
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Collections",
+              "description": null,
+              "arguments": {
+                "name": "Botvrij.eu MISP OSINT Feed",
+                "config": "a7031136-bb92-4caf-88a7-ee1d0208abb3",
+                "params": {
+                  "modified_after": "{{vars.lastPullTime}}"
+                },
+                "version": "1.0.0",
+                "connector": "botvrij-misp-osint-feed",
+                "operation": "get_collections",
+                "operationTitle": "Get Collections",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "360",
+              "left": "780",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d3683bfb-a8ef-49d8-9ce8-5d6d07b294b6",
+              "id": 5591
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Macro Value",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.pullTimeMacro}}",
+                  "body": "",
+                  "method": "GET"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "200",
+              "left": "460",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "46a409f8-0775-4bca-a83a-f266038d922d",
+              "id": 5592
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "fetchTime": "{{arrow.utcnow().int_timestamp}}",
+                "pullTimeMacro": "BotvrijMISPFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "280",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "a3e14c99-59b6-4c98-856a-9f2353e07a92",
+              "id": 5593
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Pull Time",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "macro": "{{vars.pullTimeMacro}}",
+                  "value": "{{vars.fetchTime}}"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "updatemacro",
+                "operationTitle": "CyOPs: Update Macro",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "520",
+              "left": "1100",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "7ba2cb8f-9e5c-4952-895c-c3b88ec7fd2d",
+              "id": 5594
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Value from Response",
+              "description": null,
+              "arguments": {
+                "lastPullTime": "{% if (vars.steps.Get_Macro_Value.data[\"hydra:member\"] | length) > 0%}{{vars.steps.Get_Macro_Value.data[\"hydra:member\"][0].value }}{% else %}0{% endif %}"
+              },
+              "status": null,
+              "top": "280",
+              "left": "620",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "73e3e02c-3b26-421c-ae7c-bf47e06702ab",
+              "id": 5595
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Fetch each collection",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.steps.Get_Collections.data}}",
+                  "__bulk": false,
+                  "parallel": false,
+                  "condition": ""
+                },
+                "arguments": {
+                  "collection": "{{ vars.item }}"
+                },
+                "apply_async": false,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/949c3b86-a9ac-45a5-bfe9-8ee311576ccf"
+              },
+              "status": null,
+              "top": "440",
+              "left": "940",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "40ce37cc-6b92-4752-8313-ae7c32b5ebb7",
+              "id": 5596
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Get Macro Value",
+              "targetStep": "/api/3/workflow_steps/46a409f8-0775-4bca-a83a-f266038d922d",
+              "sourceStep": "/api/3/workflow_steps/a3e14c99-59b6-4c98-856a-9f2353e07a92",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "c308a2aa-c385-4dff-8293-de949ed394a4"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/a3e14c99-59b6-4c98-856a-9f2353e07a92",
+              "sourceStep": "/api/3/workflow_steps/1ee3fea3-fe50-4ee9-97d2-ec66efc893f7",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "0302ed31-371a-428e-82b1-655eb6a0448b"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Macro Value -> Extract Value from Response",
+              "targetStep": "/api/3/workflow_steps/73e3e02c-3b26-421c-ae7c-bf47e06702ab",
+              "sourceStep": "/api/3/workflow_steps/46a409f8-0775-4bca-a83a-f266038d922d",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "590b3f78-38f3-416f-b779-ceebcb17cb61"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Value from Response -> Get Collections",
+              "targetStep": "/api/3/workflow_steps/d3683bfb-a8ef-49d8-9ce8-5d6d07b294b6",
+              "sourceStep": "/api/3/workflow_steps/73e3e02c-3b26-421c-ae7c-bf47e06702ab",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "db96f0e7-353f-421c-b6c9-2f4047ce067f"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Collections -> Fetch each collection",
+              "targetStep": "/api/3/workflow_steps/40ce37cc-6b92-4752-8313-ae7c32b5ebb7",
+              "sourceStep": "/api/3/workflow_steps/d3683bfb-a8ef-49d8-9ce8-5d6d07b294b6",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "bea44b60-592a-4532-b848-8c6edcb0b632"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Fetch each collection -> Update Pull Time",
+              "targetStep": "/api/3/workflow_steps/7ba2cb8f-9e5c-4952-895c-c3b88ec7fd2d",
+              "sourceStep": "/api/3/workflow_steps/40ce37cc-6b92-4752-8313-ae7c32b5ebb7",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "b6fe1f07-1d50-4c3b-8eb1-a8bbef252e77"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "a7a6d23f-fb30-4510-86ed-861978bebe35",
+          "recordTags": [
+            "dataingestion",
+            "ingest",
+            "botvrij-misp-osint-feed"
+          ],
+          "id": 1318,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1642409204.359058,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1642419159.718273,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": ">> Botvrij.eu > Create",
+          "aliasName": null,
+          "tag": null,
+          "description": null,
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "attributes",
+            "eventId",
+            "tlp",
+            "reputation",
+            "expiry",
+            "confidence"
+          ],
+          "synchronous": false,
+          "lastModifyDate": 1642418805,
+          "collection": "/api/3/workflow_collections/a7031136-bb92-4caf-88a7-ee1d0208abb3",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/da45bfc3-5eae-4679-ac2b-7e6c00d48715",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "20",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "da45bfc3-5eae-4679-ac2b-7e6c00d48715",
+              "id": 5586
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Record",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.input.params.attributes}}",
+                  "__bulk": true,
+                  "parallel": false,
+                  "condition": "{{vars.item.to_ids}}",
+                  "batch_size": 100
+                },
+                "resource": {
+                  "tLP": "{{ vars.tlp_resolved }}",
+                  "value": "{{ vars.item.value }}",
+                  "source": "Botvrij.eu MISP OSINT",
+                  "created": "{{ vars.item.timestamp | int }}",
+                  "pattern": "{{ vars.item.value }}",
+                  "modified": "{{ vars.item.timestamp | int }}",
+                  "sourceId": "{{ vars.item.uuid }}",
+                  "__replace": "",
+                  "expiresOn": "{% if vars.expiry %}{{ (vars.item.timestamp | int) + (vars.expiry | int)*24*60*60 }}{% else %}None{% endif %}",
+                  "validFrom": "{{ vars.item.timestamp | int }}",
+                  "confidence": "{{ vars.confidence }}",
+                  "reputation": "{{ vars.reputation_resolved }}",
+                  "sourceData": "{{ vars.item | toJSON }}",
+                  "typeOfFeed": "{{ vars.item.type | resolveRange(vars.threat_intel_feeds_typeOfFeed_map) }}",
+                  "relatedThreatIntelFeeds": [
+                    "{{vars.eventId}}"
+                  ]
+                },
+                "_showJson": false,
+                "collection": "/api/ingest-feeds/threat_intel_feeds",
+                "__recommend": [],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "320",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/7b221880-716b-4726-a2ca-5e568d330b3e",
+              "uuid": "956aed32-64b9-4d95-b759-be1cda4b2264",
+              "id": 5587
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolved": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolved": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
+              },
+              "status": null,
+              "top": "220",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "66aff4cb-1691-4624-914c-00e6fb894b3f",
+              "id": 5588
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "{{vars.input.params.tlp}}",
+                "expiry": "{{vars.input.params.expiry}}",
+                "tlp_map": "{'Red': '{{\"TrafficLightProtocol\" | picklist(\"Red\", \"uuid\")}}','Amber':'{{\"TrafficLightProtocol\" | picklist(\"Amber\", \"uuid\")}}','Green':'{{\"TrafficLightProtocol\" | picklist(\"Green\",\"uuid\")}}','White': '{{\"TrafficLightProtocol\" | picklist(\"White\", \"uuid\")}}'}",
+                "confidence": "{{vars.input.params.confidence}}",
+                "reputation": "{{vars.input.params.reputation}}",
+                "reputation_map": "{'Good': '{{\"IndicatorReputation\" | picklist(\"Good\", \"uuid\")}}','Suspicious': '{{\"IndicatorReputation\" | picklist(\"Suspicious\", \"uuid\")}}','Malicious': '{{\"IndicatorReputation\" | picklist(\"Malicious\", \"uuid\")}}','No Reputation Available': '{{\"IndicatorReputation\" | picklist(\"No Reputation Available\", \"uuid\")}}','TBD': '{{\"IndicatorReputation\" | picklist(\"TBD\", \"uuid\")}}'}",
+                "threat_intel_feeds_tLP_map": "{}",
+                "threat_intel_feeds_reputation_map": "{}",
+                "threat_intel_feeds_typeOfFeed_map": "{'ip-src,ip-dst': {{'ThreatIntelFeedType'| picklist('IP Address') }}, 'ipv4-addr': {{'ThreatIntelFeedType'| picklist('IPv4 Address') }}, 'ipv6-addr': {{'ThreatIntelFeedType'| picklist('IPv6 Address') }}, 'md5': {{'ThreatIntelFeedType'| picklist('FileHash-MD5') }}, 'sha256': {{'ThreatIntelFeedType'| picklist('FileHash-SHA256') }}, 'sha1': {{'ThreatIntelFeedType'| picklist('FileHash-SHA1') }}, 'domain': {{'ThreatIntelFeedType'| picklist('Domain') }}, 'url': {{'ThreatIntelFeedType'| picklist('URL') }}, 'filename': {{'ThreatIntelFeedType' | picklist('Filename')}}}"
+              },
+              "status": null,
+              "top": "120",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "f578a2a3-dfc0-41ec-9c66-6461717f5735",
+              "id": 5589
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Create Record",
+              "targetStep": "/api/3/workflow_steps/956aed32-64b9-4d95-b759-be1cda4b2264",
+              "sourceStep": "/api/3/workflow_steps/66aff4cb-1691-4624-914c-00e6fb894b3f",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "59f41f79-954f-4586-b4c6-378526b0fb10"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Copy of Configuration",
+              "targetStep": "/api/3/workflow_steps/f578a2a3-dfc0-41ec-9c66-6461717f5735",
+              "sourceStep": "/api/3/workflow_steps/da45bfc3-5eae-4679-ac2b-7e6c00d48715",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "26fc7186-1499-451c-989a-0cd63daaeed5"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Copy of Configuration -> Resolve Range",
+              "targetStep": "/api/3/workflow_steps/66aff4cb-1691-4624-914c-00e6fb894b3f",
+              "sourceStep": "/api/3/workflow_steps/f578a2a3-dfc0-41ec-9c66-6461717f5735",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "e642a470-3755-423e-91d3-5ea7a4d255cb"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "c1721e7c-5816-414a-997f-84bbc7c24c95",
+          "recordTags": [
+            "dataingestion",
+            "create",
+            "botvrij-misp-osint-feed"
+          ],
+          "id": 1317,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1642409204.278354,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1642419159.584917,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -883,9 +950,9 @@
   ],
   "exported_tags": [
     "dataingestion",
-    "create",
+    "fetch",
     "botvrij-misp-osint-feed",
     "ingest",
-    "fetch"
+    "create"
   ]
 }
