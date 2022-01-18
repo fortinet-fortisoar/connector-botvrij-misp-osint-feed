@@ -80,44 +80,6 @@
           "type": "datetime",
           "tooltip": "Value as an Epoch Timestamp. Event data will be returned only if the feed has been refreshed after this time.",
           "description": "Value as an Epoch Timestamp. Event data will be returned only if the feed has been refreshed after this time."
-        },
-        {
-          "title": "Process response as",
-          "name": "output_mode",
-          "visible": true,
-          "required": false,
-          "editable": true,
-          "type": "select",
-          "options": ["Create as Feed Records in FortiSOAR", "Save to File", "Return as a JSON"],
-          "value": "Create as Feed Records in FortiSOAR",
-          "tooltip": "The Feed Data can either be returned as a JSON; written to a file on the FortiSOAR server; or Created as Feed Records in FortiSOAR",
-          "description": "The Feed Data can either be returned as a JSON; written to a file on the FortiSOAR server; or Created as Feed Records in FortiSOAR",
-          "onchange": {
-            "Create as Feed Records in FortiSOAR": [
-              {
-                "title": "Record Creation Playbook IRI",
-                "description": "",
-                "type": "text",
-                "name": "create_pb_id",
-                "required": false,
-                "editable": true,
-                "visible": true
-              }
-            ],
-            "Return as a JSON": [],
-            "Save to File": [
-              {
-                "title": "Filename",
-                "name": "filename",
-                "type": "text",
-                "visible": true,
-                "editable": true,
-                "required": true,
-                "placeholder": "Eg. feeds.json",
-                "tooltip": "The file will be created under /tmp"
-              }
-            ]
-          }
         }
       ],
       "enabled": true
