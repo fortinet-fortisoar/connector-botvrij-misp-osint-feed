@@ -89,7 +89,7 @@
                 "resource": {
                   "tLP": "{{ vars.tlp_resolved }}",
                   "value": "{{vars.steps.Get_events_for_a_collection.data.Event.info}}",
-                  "source": "Botvrij.ru MISP OSINT",
+                  "source": "Botvrij.eu MISP OSINT",
                   "created": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
                   "pattern": "{{vars.steps.Get_events_for_a_collection.data.Event.info}}",
                   "modified": "{{ vars.steps.Get_events_for_a_collection.data.Event.timestamp | int }}",
