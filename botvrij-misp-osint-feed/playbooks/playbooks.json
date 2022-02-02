@@ -6,7 +6,7 @@
       "@type": "WorkflowCollection",
       "name": "Sample - Botvrij.eu MISP OSINT Feed - 1.0.0",
       "description": null,
-      "visible": false,
+      "visible": true,
       "image": "medium.png",
       "id": 124,
       "createDate": 1641905690.156602,
