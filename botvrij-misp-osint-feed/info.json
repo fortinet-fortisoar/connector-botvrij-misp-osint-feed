@@ -24,7 +24,7 @@
       {
         "title": "Server URL",
         "required": true,
-        "editable": false,
+        "editable": true,
         "visible": true,
         "type": "text",
         "name": "server_url",
