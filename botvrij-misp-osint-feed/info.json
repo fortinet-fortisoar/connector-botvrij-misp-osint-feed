@@ -1,7 +1,7 @@
 {
   "name": "botvrij-misp-osint-feed",
   "label": "Botvrij.eu MISP OSINT Feed",
-  "description": "Botvrij.eu MISP OSINT Feed Integration",
+  "description": "Botvrij.eu MISP OSINT Feed Integration.<br/><br/>This connector has a dependency on the <a href=\"/content-hub/all-content/?contentType=solutionpack&amp;tag=ThreatIntelManagement\" target=\"_blank\" rel=\"noopener\">Threat Intel Management Solution Pack</a>. Install the Solution Pack before enabling ingestion of Threat Feeds from this source.",
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
