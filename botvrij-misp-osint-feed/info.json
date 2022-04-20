@@ -9,6 +9,7 @@
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
   "category": "Threat Intelligence",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/botvrij-eu-misp-osint-feed/254/botvrij-eu-misp-osint-feed-v1-0-0",
   "tags": [
     "ThreatIntel"
   ],
